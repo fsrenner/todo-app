@@ -1,0 +1,13 @@
+Reminder application
+
+TODO application
+Create a list of reminders
+clear a list
+Be able to check off the reminder
+Toggle between reminders that are left and still need
+
+Create
+Edit
+Delete
+
+reminder: id, description, time, viewed or not
