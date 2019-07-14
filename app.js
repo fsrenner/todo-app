@@ -1,6 +1,7 @@
 const path = require('path');
 const mongoose = require('mongoose');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
 const { urlencoded, json } = require('body-parser');
@@ -31,6 +32,7 @@ app.use(morgan('dev'));
 app.use(urlencoded({extended: true}));
 app.use(json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors())
 
 app.get('/', (req, res) => {
    res.render('index', { title: 'Express' });
@@ -130,7 +132,9 @@ app.delete('/todo/:id', async (req, res) => {
    const deleteId = req.params.id;
    console.log(`Received id: ${deleteId}`);
    try {
-      const deletedId = await Todo.findOneAndRemove(deleteId);
+      const deletedId = await Todo.findOneAndRemove({
+          _id: deleteId
+      });
       console.log(`Successfully deleted record with id: ${deleteId}`);
       res.status(200).json(await Todo.find({}).lean().exec());
    } catch (e) {
